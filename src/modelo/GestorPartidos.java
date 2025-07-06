@@ -1,31 +1,36 @@
-
 package modelo;
-import java.util.LinkedList;
 
-public class GestorPartidos {
-    // Lista de partidos 
-    private LinkedList<PartidoPolitico> listaPartidos;
+public class GestorPartidos{
+
+    private PartidoPolitico[] listaPartidos;
+    private int cantidad;
 
     // constructor
-    public GestorPartidos() {
-        listaPartidos = new LinkedList<>();
+    public GestorPartidos(int capacidad) {
+        listaPartidos = new PartidoPolitico[capacidad];
+        cantidad = 0;
     }
 
-    // metodo registrar
+    // registrar
     public void registrarPartido(PartidoPolitico p) {
-        listaPartidos.add(p);
-        System.out.println("Partido registrado: " + p.getNombre());
+        if (cantidad < listaPartidos.length) {
+            listaPartidos[cantidad] = p;
+            cantidad++;
+            System.out.println("Partido registrado: " + p.getNombre());
+        } else {
+            System.out.println("No se puede registrar. Lista llena.");
+        }
     }
 
-    // metodo modificar
+    // modificar
     public void modificarPartido(String nombreBuscar, String nuevoNombre, String nuevaSigla,
                                  String nuevoLogo, String nuevoRepresentante) {
-        for (PartidoPolitico p : listaPartidos) {
-            if (p.getNombre().equalsIgnoreCase(nombreBuscar)) {
-                p.setNombre(nuevoNombre);
-                p.setSigla(nuevaSigla);
-                p.setLogo(nuevoLogo);
-                p.setRepresentantelegal(nuevoRepresentante);
+        for (int i = 0; i < cantidad; i++) {
+            if (listaPartidos[i].getNombre().equals(nombreBuscar)) {
+                listaPartidos[i].setNombre(nuevoNombre);
+                listaPartidos[i].setSigla(nuevaSigla);
+                listaPartidos[i].setLogo(nuevoLogo);
+                listaPartidos[i].setRepresentanteLegal(nuevoRepresentante);
                 System.out.println("Partido modificado correctamente.");
                 return;
             }
@@ -33,11 +38,16 @@ public class GestorPartidos {
         System.out.println("Partido no encontrado.");
     }
 
-    //metodo eliminar
+    // Eliminar
     public void eliminarPartido(String nombreBuscar) {
-        for (PartidoPolitico p : listaPartidos) {
-            if (p.getNombre().equalsIgnoreCase(nombreBuscar)) {
-                listaPartidos.remove(p);
+        for (int i = 0; i < cantidad; i++) {
+            if (listaPartidos[i].getNombre().equals(nombreBuscar)) {
+                // Desplazar a la izquierda
+                for (int j = i; j < cantidad - 1; j++) {
+                    listaPartidos[j] = listaPartidos[j + 1];
+                }
+                listaPartidos[cantidad - 1] = null;
+                cantidad--;
                 System.out.println("Partido eliminado correctamente.");
                 return;
             }
@@ -45,21 +55,19 @@ public class GestorPartidos {
         System.out.println("Partido no encontrado.");
     }
 
-// mostrar lista
-    public void listarPartidos() {
-        System.out.println("==== Lista de partidos ====");
-        if (listaPartidos.isEmpty()) {
+    // mostrar
+    public void mostrarPartidos() {
+        System.out.println("=== Lista de partidos ===");
+        if (cantidad == 0) {
             System.out.println("No hay partidos registrados.");
         } else {
-            for (PartidoPolitico p : listaPartidos) {
+            for (int i = 0; i < cantidad; i++) {
+                PartidoPolitico p = listaPartidos[i];
                 System.out.println("Nombre: " + p.getNombre() +
                                    ", Sigla: " + p.getSigla() +
                                    ", Logo: " + p.getLogo() +
-                                   ", Representante Legal: " + p.getRepresentantelegal());
+                                   ", Representante Legal: " + p.getRepresentanteLegal());
             }
         }
     }
-
-    
-    
 }

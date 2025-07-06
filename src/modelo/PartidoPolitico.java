@@ -2,18 +2,22 @@
 package modelo;
 
 public class PartidoPolitico implements Registro {
+
+    // atributos
     private String nombre;
     private String sigla;
     private String logo;
-    private String representantelegal;
+    private String representanteLegal;
 
-    public PartidoPolitico(String nombre, String sigla, String logo, String representantelegal) {
+    //constructor
+    public PartidoPolitico(String nombre, String sigla, String logo, String representanteLegal) {
         this.nombre = nombre;
         this.sigla = sigla;
         this.logo = logo;
-        this.representantelegal = representantelegal;
+        this.representanteLegal = representanteLegal;
     }
 
+    // getters setters
     public String getNombre() {
         return nombre;
     }
@@ -38,20 +42,25 @@ public class PartidoPolitico implements Registro {
         this.logo = logo;
     }
 
-    public String getRepresentantelegal() {
-        return representantelegal;
+    public String getRepresentanteLegal() {
+        return representanteLegal;
     }
 
-    public void setRepresentantelegal(String representantelegal) {
-        this.representantelegal = representantelegal;
+    public void setRepresentanteLegal(String representanteLegal) {
+        this.representanteLegal = representanteLegal;
     }
-    
-    //implementar interfaz
+
+    //mostrar
+    public void mostrar() {
+        System.out.println("\t" + nombre + "\t" + sigla + "\t" + representanteLegal);
+    }
+
+    // interfa
     @Override
-    public void registrar(){
-        System.out.println("Partido politico registrado: "+nombre);
+    public void registrar() {
+        System.out.println("Partido político registrado: " + nombre);
     }
-    
+
     @Override
     public void modificar() {
         System.out.println("Partido político modificado: " + nombre);
@@ -61,5 +70,5 @@ public class PartidoPolitico implements Registro {
     public void eliminar() {
         System.out.println("Partido político eliminado: " + nombre);
     }
-    
+
 }

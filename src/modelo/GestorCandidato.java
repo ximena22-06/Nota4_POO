@@ -1,38 +1,42 @@
-
 package modelo;
-import java.util.LinkedList;
-
 
 public class GestorCandidato {
-    private LinkedList<Candidato> listaCandidatos;
+
+    private Candidato[] listaCandidatos;
+    private int cantidad;
 
     // Constructor
-    public GestorCandidato() {
-        listaCandidatos = new LinkedList<>();
+    public GestorCandidato(int capacidad) {
+        listaCandidatos = new Candidato[capacidad];
+        cantidad = 0;
     }
 
-    //reigstrar
+    // registrar
     public void registrarCandidato(Candidato c) {
-        // Verificar si ya existe un candidato con el mismo DNI
-        for (Candidato candidatoExistente : listaCandidatos) {
-            if (candidatoExistente.getDni() == c.getDni()) {
+        // verificar duplicados por dni
+        for (int i = 0; i < cantidad; i++) {
+            if (listaCandidatos[i].getDni() == c.getDni()) {
                 System.out.println("Error: ya existe un candidato con ese DNI.");
                 return;
             }
         }
 
-        // Si no existe, agregarlo
-        listaCandidatos.add(c);
-        System.out.println("Candidato registrado: " + c.getNombre() + " " + c.getApellido());
+        if (cantidad < listaCandidatos.length) {
+            listaCandidatos[cantidad] = c;
+            cantidad++;
+            System.out.println("Candidato registrado: " + c.getNombre() + " " + c.getApellido());
+        } else {
+            System.out.println("No se puede registrar. Lista llena.");
+        }
     }
 
-    // modificar
+    // modificar 
     public void modificarCandidato(int dniBuscar, String nuevoNombre, String nuevoApellido, PartidoPolitico nuevoPartido) {
-        for (Candidato c : listaCandidatos) {
-            if (c.getDni() == dniBuscar) {
-                c.setNombre(nuevoNombre);
-                c.setApellido(nuevoApellido);
-                c.setPartido(nuevoPartido);
+        for (int i = 0; i < cantidad; i++) {
+            if (listaCandidatos[i].getDni() == dniBuscar) {
+                listaCandidatos[i].setNombre(nuevoNombre);
+                listaCandidatos[i].setApellido(nuevoApellido);
+                listaCandidatos[i].setPartido(nuevoPartido);
                 System.out.println("Candidato modificado correctamente.");
                 return;
             }
@@ -40,11 +44,16 @@ public class GestorCandidato {
         System.out.println("Candidato no encontrado.");
     }
 
-    //eliminar por dni
+    // eliminar
     public void eliminarCandidato(int dniBuscar) {
-        for (Candidato c : listaCandidatos) {
-            if (c.getDni() == dniBuscar) {
-                listaCandidatos.remove(c);
+        for (int i = 0; i < cantidad; i++) {
+            if (listaCandidatos[i].getDni() == dniBuscar) {
+                //mover izquierda
+                for (int j = i; j < cantidad - 1; j++) {
+                    listaCandidatos[j] = listaCandidatos[j + 1];
+                }
+                listaCandidatos[cantidad - 1] = null;
+                cantidad--;
                 System.out.println("Candidato eliminado correctamente.");
                 return;
             }
@@ -52,19 +61,28 @@ public class GestorCandidato {
         System.out.println("Candidato no encontrado.");
     }
 
-    // listar
-    public void listarCandidatos() {
-        System.out.println("==== Lista de candidatos ====");
-        if (listaCandidatos.isEmpty()) {
+    // mostrar
+    public void mostrarCandidatos() {
+        System.out.println("=== Lista de candidatos ===");
+        if (cantidad == 0) {
             System.out.println("No hay candidatos registrados.");
         } else {
-            for (Candidato c : listaCandidatos) {
+            for (int i = 0; i < cantidad; i++) {
+                Candidato c = listaCandidatos[i];
                 System.out.println("Nombre: " + c.getNombre() + " " + c.getApellido() +
                                    ", DNI: " + c.getDni() +
                                    ", Partido: " + c.getPartido().getNombre());
             }
         }
     }
-
+    
+    public Candidato buscarCandidato(int dniBuscar) {
+    for (int i = 0; i < cantidad; i++) {
+        if (listaCandidatos[i].getDni() == dniBuscar) {
+            return listaCandidatos[i];
+        }
+    }
+    return null;
+}
 
 }

@@ -1,26 +1,30 @@
 package modelo;
 
 public class MiembroMesa extends Persona {
-    private String Tipo; 
 
-    public MiembroMesa(String nombre, String apellido, String rol) {
-        super(nombre, apellido); 
-        this.Tipo = Tipo;
+    private String tipo;
+
+    public MiembroMesa(String nombre, String apellido, String tipo) {
+        super(nombre, apellido);
+        this.tipo = tipo;
     }
 
+    //getters setters
     public String getTipo() {
-        return Tipo;
+        return tipo;
     }
 
-    public void setTipo(String rol) {
-        this.Tipo = rol;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
-    public void mostrarInfo() {
+    // mostrar
+    public void mostrarInfoMiembro() {
         System.out.println("Miembro de Mesa");
         System.out.println("Nombre completo: " + nombre + " " + apellido);
-        System.out.println("Rol: " + Tipo);
+        System.out.println("Rol: " + tipo);
     }
+
 }
 
 
