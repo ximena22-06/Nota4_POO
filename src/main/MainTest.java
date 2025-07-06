@@ -482,9 +482,9 @@ public class MainTest {
                 // ============================
                 boolean agregado = gestor.registrarActa(a);
                 if (agregado) {
-                    System.out.println("✅ Acta registrada correctamente.");
+                    System.out.println("Acta registrada correctamente.");
                 } else {
-                    System.out.println("❌ No se pudo registrar el acta. Lista llena.");
+                    System.out.println("No se pudo registrar el acta. Lista llena.");
                 }
             }           
             case 2 -> {
