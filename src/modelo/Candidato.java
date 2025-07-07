@@ -1,4 +1,4 @@
-
+   
 package modelo;
 
 public class Candidato extends Persona implements Registro {
